@@ -13,10 +13,10 @@ const restaurants = [
       paper: "#f8efe2"
     },
     menu: [
-      { name: "招牌大烧麦", description: "四代手艺传承，绝不预制，每一口都是不同的感受。", chef: "李飞", image: "images/dim-sum.svg", price: 18 },
-      { name: "热巧克力", description: "来自异国的青春风味，带你回到那个纯真的年代。", chef: "热茶", image: "images/dim-sum.svg", price: 24 },
-      { name: "左岸咖啡", description: "塞纳河畔，回到故事最初的地方。", chef: "文师傅，鑫师傅", image: "images/dim-sum.svg", price: 32 },
-      { name: "云朵杏仁茶", description: "温热杏仁茶盖一层细密奶泡，甜度轻柔。", chef: "林小满", image: "images/dim-sum.svg", price: 18 }
+      { name: "招牌大烧麦", description: "四代手艺传承，绝不预制，每一口都是不同的感受。", chef: "李飞", image: "images/IMG_1085.HEIC", price: 28 },
+      { name: "热巧克力", description: "来自异国的青春风味，回到那个纯真的年代。", chef: "文师傅，鑫师傅", image: "images/IMG_1072.JPG", price: 18 },
+      { name: "左岸咖啡", description: "塞纳河畔，回到故事最初的地方。", chef: "文师傅，鑫师傅", image: "images/IMG_1073.JPG", price: 24 },
+      { name: "彩虹大福", description: "香草味是主厨的最爱哦。", chef: "文师傅，鑫师傅", image: "images/IMG_1079.JPG", price: 15 }
     ]
   },
   {
@@ -31,10 +31,11 @@ const restaurants = [
       paper: "#fffdf0"
     },
     menu: [
-      { name: "爆浆泡菜芝士饼", description: "酥脆外壳夹着酸辣泡菜与拉丝芝士。", chef: "韩美娜", image: "images/kimchi.svg", price: 36 },
-      { name: "霓虹年糕锅", description: "软糯年糕、鱼饼和泡菜，在甜辣汤汁中翻滚。", chef: "朴灿宇", image: "images/kimchi.svg", price: 48 },
-      { name: "发酵星球拌饭", description: "焦香锅巴配七色蔬菜、泡菜与半熟蛋。", chef: "韩美娜", image: "images/kimchi.svg", price: 42 },
-      { name: "柚子气泡冰", description: "清爽柚子汽水加碎冰，为辣味按下暂停键。", chef: "李夏天", image: "images/kimchi.svg", price: 20 }
+      { name: "炽热意面", description: "eat it up,eat it up.", chef: "五炽", image: "images/IMG_1074.JPG", price: 36 },
+      { name: "杏仁巧克力", description: "Almond chocolate,外表甜蜜滋味苦涩。", chef: "五礼", image: "images/IMG_1075.JPG", price: 28 },
+      { name: "韩式烤五花肉", description: "主厨尝遍全韩国烤肉总结出的秘方。", chef: "田大厨", image: "images/IMG_1076.JPG", price: 91 },
+      { name: "清爽冷面", description: "酸甜可口，清凉解腻，放了薄荷哦。", chef: "闵chef", image: "images/IMG_1077.JPG", price: 39 },
+      { name: "桔梗花茶", description: "Tiffany特调，仅此一家。", chef: "训主厨，伦主厨", image: "images/IMG_1078.JPG", price: 20 }
     ]
   },
   {
@@ -49,10 +50,11 @@ const restaurants = [
       paper: "#eef6f2"
     },
     menu: [
-      { name: "红烧排骨", description: "精选猪肋排，慢炖至肉质酥烂，色泽红亮，来自妈妈的味道。", chef: "李师傅", image: "images/banquet.svg", price: 58 },
-      { name: "卤牛肉", description: "精选牛肉，经过特制卤料慢煮，肉质鲜嫩，香气扑鼻。", chef: "李师傅", image: "images/banquet.svg", price: 68 },
-      { name: "酸辣白菜", description: "酸辣开胃，清爽解腻。", chef: "张师傅", image: "images/banquet.svg", price: 16 },
-      { name: "金玉满堂饺子", description: "手工饺子，三位师傅一起包制，皮薄馅大。", chef: "李、张、小张三位师傅", image: "images/banquet.svg", price: 36 }
+      { name: "红烧排骨", description: "精选猪肋排，慢炖至肉质酥烂，色泽红亮，来自妈妈的味道。", chef: "李师傅", image: "images/IMG_1068.JPG", price: 58 },
+      { name: "卤牛肉", description: "精选牛肉，经过特制卤料慢煮，肉质鲜嫩，香气扑鼻。", chef: "李师傅", image: "images/IMG_1069.JPG", price: 68 },
+      { name: "酸辣白菜", description: "酸辣开胃，清爽解腻。", chef: "张师傅", image: "images/IMG_1070.JPG", price: 18 },
+      { name: "番茄鸡蛋面", description: "番茄的酸甜与鸡蛋的香滑完美融合，独家秘方，限量供应。", chef: "张师傅", image: "images/IMG_1071.JPG", price: 16 },
+      { name: "番茄炖牛腩", description: "精选澳洲牛肉，番茄与牛腩的完美结合，汤汁浓郁。", chef: "小张师傅", image: "images/IMG_1081.JPG", price: 42 }
     ]
   },
   {
@@ -68,10 +70,10 @@ const restaurants = [
       paper: "#eaf0f7"
     },
     menu: [
-      { name: "月轨气泡饮", description: "青柠、柚子与苏打轻轻碰杯，像夜空里升起的第一颗星。", chef: "Noah", image: "images/moonride.svg", price: 32 },
-      { name: "北境香草烤串", description: "迷迭香与烟熏香料包裹蔬菜和嫩肉，趁热享用。", chef: "Ari", image: "images/moonride.svg", price: 46 },
-      { name: "地平线黑松露薯角", description: "厚切薯角烤至金黄，撒上黑松露盐与帕尔马干酪。", chef: "Ari", image: "images/moonride.svg", price: 38 },
-      { name: "午夜可可云", description: "微苦可可慕斯配轻盈奶霜，为秘密旅程画上句号。", chef: "Mira", image: "images/moonride.svg", price: 34 }
+      { name: "照烧鸡腿饭", description: "精选澳洲鸡肉，复刻家乡味道。", chef: "欣主厨", image: "images/IMG_1080.JPG", price: 32 },
+      { name: "红酸汤刀削面", description: "来自贵州的红酸汤，酸辣开胃。", chef: "芳主厨", image: "images/IMG_1082.JPG", price: 28 },
+      { name: "葡萄冰茶特调", description: "葡萄与冰茶的完美结合，就像我们每一次旅程。", chef: "欣主厨，芳主厨", image: "images/IMG_1083.JPG", price: 24 },
+      { name: "椰林飘香", description: "养乐多与椰奶，意料之外的美好。", chef: "欣主厨，芳主厨", image: "images/IMG_1084.JPG", price: 22 }
     ]
   }
 ];
