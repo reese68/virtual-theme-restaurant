@@ -13,7 +13,7 @@ const restaurants = [
       paper: "#f8efe2"
     },
     menu: [
-      { name: "招牌大烧麦", description: "四代手艺传承，绝不预制，每一口都是不同的感受。", chef: "李飞", image: "images/IMG_1085.HEIC", price: 28 },
+      { name: "招牌大烧麦", description: "四代手艺传承，绝不预制，每一口都是不同的感受。", chef: "李飞", image: "images/IMG_1086.jpg", price: 28 },
       { name: "热巧克力", description: "来自异国的青春风味，回到那个纯真的年代。", chef: "文师傅，鑫师傅", image: "images/IMG_1072.JPG", price: 18 },
       { name: "左岸咖啡", description: "塞纳河畔，回到故事最初的地方。", chef: "文师傅，鑫师傅", image: "images/IMG_1073.JPG", price: 24 },
       { name: "彩虹大福", description: "香草味是主厨的最爱哦。", chef: "文师傅，鑫师傅", image: "images/IMG_1079.JPG", price: 15 }
