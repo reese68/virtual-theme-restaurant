@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">霓虹泡菜插画</title>
+  <desc id="desc">粉色霓虹背景下，一碗热气腾腾的泡菜料理。</desc>
+  <defs>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#62172f"/>
+      <stop offset="1" stop-color="#d92d5a"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#neon)"/>
+  <circle cx="105" cy="90" r="130" fill="none" stroke="#ffc3cf" stroke-width="18" opacity=".45"/>
+  <path d="M565 45 L755 230 M620 20 L785 175" stroke="#ffdb69" stroke-width="12" opacity=".65"/>
+  <ellipse cx="405" cy="405" rx="245" ry="48" fill="#260b15" opacity=".38"/>
+  <path d="M195 220 H615 Q585 420 405 438 Q225 420 195 220Z" fill="#26131b"/>
+  <ellipse cx="405" cy="220" rx="210" ry="72" fill="#ffe2be"/>
+  <g fill="none" stroke-linecap="round" stroke-width="28">
+    <path d="M272 226 Q320 155 370 228" stroke="#e64a35"/>
+    <path d="M355 233 Q415 140 470 232" stroke="#f37a36"/>
+    <path d="M450 229 Q500 166 548 226" stroke="#e64a35"/>
+  </g>
+  <circle cx="405" cy="202" r="42" fill="#ffd95f"/>
+  <g fill="none" stroke="#ffc3cf" stroke-linecap="round" stroke-width="10">
+    <path d="M330 120 Q294 78 328 40"/>
+    <path d="M412 106 Q377 60 416 22"/>
+    <path d="M493 120 Q465 74 500 40"/>
+  </g>
+</svg>

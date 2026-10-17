@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">月轨酒吧插画</title>
+  <desc id="desc">星空、月亮和一杯带着柑橘装饰的饮品。</desc>
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#162a44"/>
+      <stop offset="1" stop-color="#456583"/>
+    </linearGradient>
+    <linearGradient id="drink" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#e2b969"/>
+      <stop offset="1" stop-color="#b76e51"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#night)"/>
+  <circle cx="630" cy="112" r="66" fill="#f3e4bd"/>
+  <g fill="#f8f2df">
+    <circle cx="135" cy="86" r="3"/><circle cx="241" cy="133" r="2"/>
+    <circle cx="377" cy="60" r="3"/><circle cx="508" cy="178" r="2"/>
+    <circle cx="710" cy="240" r="3"/><circle cx="91" cy="224" r="2"/>
+  </g>
+  <path d="M0 359 Q180 294 360 352 T800 332 V500 H0Z" fill="#233a58"/>
+  <path d="M0 414 Q200 359 410 420 T800 389 V500 H0Z" fill="#15283f"/>
+  <ellipse cx="405" cy="440" rx="166" ry="23" fill="#0c1b2d" opacity=".55"/>
+  <path d="M285 194 H515 L489 366 Q405 410 311 366Z" fill="url(#drink)" stroke="#f8f2df" stroke-width="10"/>
+  <path d="M320 361 Q405 393 480 361" fill="none" stroke="#f8f2df" stroke-width="10"/>
+  <path d="M405 390 V434 M341 434 H469" fill="none" stroke="#f8f2df" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="484" cy="195" r="44" fill="none" stroke="#eed178" stroke-width="16"/>
+  <path d="M375 188 Q390 170 405 189 Q423 170 439 188" fill="none" stroke="#d7e8cf" stroke-width="8" stroke-linecap="round"/>
+</svg>

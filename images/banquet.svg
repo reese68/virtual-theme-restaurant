@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">湖畔酒楼插画</title>
+  <desc id="desc">蓝色湖光中，一只盛着酒楼菜肴的白瓷盘。</desc>
+  <defs>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#89abeb"/>
+      <stop offset="1" stop-color="#e6efff"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#lake)"/>
+  <circle cx="665" cy="100" r="62" fill="#fff4cf" opacity=".9"/>
+  <path d="M0 250 Q170 205 340 255 T800 240" fill="none" stroke="#fff" stroke-width="10" opacity=".45"/>
+  <path d="M80 330 Q250 288 410 330 T760 315" fill="none" stroke="#4761b6" stroke-width="9" opacity=".3"/>
+  <ellipse cx="400" cy="380" rx="238" ry="55" fill="#15296b" opacity=".16"/>
+  <ellipse cx="400" cy="285" rx="220" ry="128" fill="#fdfcf6" stroke="#4761b6" stroke-width="13"/>
+  <ellipse cx="400" cy="285" rx="174" ry="92" fill="#d9e4ff"/>
+  <g fill="#934733">
+    <rect x="287" y="245" width="105" height="58" rx="25" transform="rotate(-12 287 245)"/>
+    <rect x="395" y="235" width="115" height="62" rx="27" transform="rotate(9 395 235)"/>
+    <rect x="343" y="295" width="122" height="58" rx="25" transform="rotate(5 343 295)"/>
+  </g>
+  <g fill="#65a574">
+    <circle cx="274" cy="315" r="22"/>
+    <circle cx="520" cy="305" r="25"/>
+    <circle cx="470" cy="220" r="18"/>
+  </g>
+  <path d="M565 155 Q610 112 653 153 Q609 143 565 155Z" fill="#fff"/>
+</svg>

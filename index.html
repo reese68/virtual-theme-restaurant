@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="输入餐厅代码，探索三家风格不同的主题餐厅。"
+    />
+    <title>虚拟主题餐厅</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <!-- 初始画面：让访客查找一家虚拟餐厅 -->
+      <section id="welcome-view" class="welcome-view" aria-labelledby="welcome-title">
+        <div class="welcome-card">
+          <p class="eyebrow">VIRTUAL DINING CLUB</p>
+          <h1 id="welcome-title">欢迎来到<br />主题餐厅</h1>
+          <p class="welcome-copy">
+            每扇门后都有一种味道。输入餐厅代码，看看今天为你准备了什么。
+          </p>
+
+          <form id="restaurant-form" class="restaurant-form">
+            <label for="restaurant-input">餐厅代码</label>
+            <div class="input-row">
+              <input
+                id="restaurant-input"
+                name="restaurant"
+                type="text"
+                placeholder="例如：2171 "
+                autocomplete="off"
+                required
+              />
+              <button type="submit">进入餐厅</button>
+            </div>
+            <p class="input-hint">可选：十八楼烧麦 · 泡菜放题 · 天鹅大酒楼</p>
+            <p id="form-message" class="form-message" role="alert" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <aside class="door-sign" aria-label="今日营业提示">
+          <div class="door-sign-heading">
+            <span class="door-sign-label">今日营业</span>
+            <div class="door-count-row">
+              <strong class="door-count">3</strong>
+              <span class="door-count-copy">家主题餐厅</span>
+            </div>
+          </div>
+
+          <div class="business-hours">
+            <span>营业时间</span>
+            <strong>11:30–21:00</strong>
+            <small>每日营业</small>
+          </div>
+        </aside>
+      </section>
+
+      <!-- 餐厅画面：内容由 script.js 根据 menu-data.js 生成 -->
+      <section id="restaurant-view" class="restaurant-view" aria-live="polite" hidden>
+        <div class="restaurant-header">
+          <button id="change-restaurant" class="back-button" type="button">
+            <span aria-hidden="true">←</span> 更换餐厅
+          </button>
+          <p id="restaurant-code" class="restaurant-code"></p>
+        </div>
+
+        <div class="restaurant-intro">
+          <p id="restaurant-theme" class="eyebrow"></p>
+          <h2 id="restaurant-name"></h2>
+          <p id="restaurant-description"></p>
+        </div>
+
+        <div class="menu-section">
+          <div class="menu-heading">
+            <h3 id="menu-title">今日菜单</h3>
+            <p>点击菜品，查看详情并加入点单</p>
+          </div>
+          <div id="menu-list" class="menu-grid"></div>
+        </div>
+
+        <!-- 购物清单只记录当前浏览器里的模拟点单。 -->
+        <section id="order-section" class="order-section" aria-labelledby="order-title">
+          <div class="order-heading">
+            <div>
+              <p class="eyebrow">YOUR ORDER</p>
+              <h3 id="order-title">点单清单</h3>
+            </div>
+            <span id="cart-count" class="cart-count" aria-live="polite">0 份菜品</span>
+          </div>
+
+          <p id="cart-empty" class="cart-empty">还没有选择菜品。点击上方菜品查看详情并加入点单。</p>
+
+          <div id="cart-content" hidden>
+            <ul id="cart-items" class="cart-items"></ul>
+            <div class="cart-total">
+              <span>合计</span>
+              <strong id="cart-total">¥0</strong>
+            </div>
+
+            <form id="order-form" class="order-form">
+              <fieldset class="service-options">
+                <legend>取餐方式</legend>
+                <label><input type="radio" name="service" value="dine-in" checked /> 堂食</label>
+                <label><input type="radio" name="service" value="pickup" /> 自取</label>
+              </fieldset>
+              <div id="table-field" class="table-field">
+                <label for="table-number">桌号</label>
+                <input id="table-number" name="table-number" type="text" maxlength="12" placeholder="例如：A3" required />
+              </div>
+              <div class="order-actions">
+                <button id="continue-order" class="secondary-button" type="button">继续选菜</button>
+                <button class="primary-button" type="submit">提交订单</button>
+              </div>
+            
+            </form>
+          </div>
+        </section>
+      </section>
+
+      <!-- 菜品详情弹窗：点击任意菜品后显示 -->
+      <dialog
+        id="dish-dialog"
+        class="dish-dialog"
+        aria-labelledby="dish-name"
+        aria-describedby="dish-description"
+      >
+        <form method="dialog">
+          <button class="dialog-close" type="submit" aria-label="关闭菜品详情">×</button>
+        </form>
+        <img id="dish-image" class="dish-image" src="" alt="" />
+        <div class="dish-details">
+          <p id="dish-restaurant" class="eyebrow"></p>
+          <div class="dish-title-row">
+            <h3 id="dish-name"></h3>
+            <span id="dish-price" class="menu-price"></span>
+          </div>
+          <p id="dish-description" class="dish-description"></p>
+          <p class="dish-chef-label">主厨</p>
+          <p id="dish-chef" class="dish-chef"></p>
+          <button id="add-to-order" class="primary-button add-to-order" type="button">加入点单</button>
+        </div>
+      </dialog>
+
+      <!-- 提交后显示本次模拟订单的回执。 -->
+      <dialog id="order-success" class="order-success" aria-labelledby="success-title">
+        <p class="eyebrow">ORDER RECEIVED</p>
+        <h3 id="success-title">订单已提交</h3>
+        <p id="success-summary"></p>
+        <ul id="success-items" class="success-items"></ul>
+        <p class="order-note">订单已发送给厨房。</p>
+        <form method="dialog">
+          <button class="primary-button" type="submit">返回菜单</button>
+        </form>
+      </dialog>
+    </main>
+
+    <footer></footer>
+
+    <!-- 数据先加载，交互脚本才能读取餐厅和菜单信息 -->
+    <script src="menu-data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
