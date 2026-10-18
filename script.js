@@ -254,9 +254,9 @@ function changeQuantity(dish, amount) {
 // 进度只按下单时间模拟，不代表真实厨房状态；刷新后也能重新算出当前阶段。
 function getOrderStatus(createdAt) {
   const elapsed = Math.max(0, Date.now() - createdAt);
-  if (elapsed >= readyAfterMs) return "模拟：可取餐";
-  if (elapsed >= 10 * 1000) return "模拟：制作中";
-  return "模拟：已接单";
+  if (elapsed >= readyAfterMs) return "可取餐";
+  if (elapsed >= 10 * 1000) return "制作中";
+  return "已接单";
 }
 
 function renderOrders() {
@@ -277,7 +277,7 @@ function renderOrders() {
     const top = document.createElement("div");
     top.className = "order-record-top";
     const code = document.createElement("strong");
-    code.textContent = `模拟取餐码 ${order.pickupCode}`;
+    code.textContent = `取餐码 ${order.pickupCode}`;
     const status = document.createElement("span");
     status.className = "order-status";
     status.textContent = getOrderStatus(order.createdAt);
@@ -367,7 +367,7 @@ orderForm.addEventListener("submit", (event) => {
   savedOrders = savedOrders.slice(0, 20); // 避免此浏览器积累无限多的演示订单。
   saveData(orderStorageKey, savedOrders);
 
-  document.querySelector("#success-code").textContent = `模拟取餐码 ${order.pickupCode}`;
+  document.querySelector("#success-code").textContent = `取餐码 ${order.pickupCode}`;
   document.querySelector("#success-status").textContent = getOrderStatus(order.createdAt);
   document.querySelector("#success-summary").textContent =
     `${currentRestaurant.name} · ${itemCount} 份菜品 · 合计 ¥${total} · ${service}`;
