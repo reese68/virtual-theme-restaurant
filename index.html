@@ -7,7 +7,7 @@
       name="description"
       content="输入餐厅代码，探索风格不同的主题餐厅。"
     />
-    <title>虚拟主题餐厅</title>
+    <title>主题餐厅</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -80,7 +80,7 @@
           <div id="menu-list" class="menu-grid"></div>
         </div>
 
-        <!-- 购物清单只记录当前浏览器里的模拟点单。 -->
+        <!-- 购物清单和模拟订单只保存在当前浏览器。 -->
         <section id="order-section" class="order-section" aria-labelledby="order-title">
           <div class="order-heading">
             <div>
@@ -113,9 +113,24 @@
                 <button id="continue-order" class="secondary-button" type="button">继续选菜</button>
                 <button class="primary-button" type="submit">提交订单</button>
               </div>
-            
+              <p class="order-note"></p>
             </form>
           </div>
+        </section>
+
+        <!-- 已提交的模拟订单：刷新页面后仍可在这台设备上查看。 -->
+        <section id="my-orders" class="my-orders" aria-labelledby="my-orders-title">
+          <div class="order-heading">
+            <div>
+              <p class="eyebrow">ORDER STATUS</p>
+              <h3 id="my-orders-title">我的订单</h3>
+            </div>
+            <button id="clear-orders" class="secondary-button" type="button">清空订单记录</button>
+          </div>
+          <p class="order-note">点单记录仅保存在此浏览器。</p>
+          <p id="my-orders-empty" class="cart-empty">还没有提交订单。</p>
+          <ul id="my-orders-list" class="my-orders-list"></ul>
+          <button id="new-order" class="secondary-button new-order-button" type="button">再次点单</button>
         </section>
       </section>
 
@@ -146,12 +161,14 @@
       <!-- 提交后显示本次模拟订单的回执。 -->
       <dialog id="order-success" class="order-success" aria-labelledby="success-title">
         <p class="eyebrow">ORDER RECEIVED</p>
-        <h3 id="success-title">订单已提交</h3>
+        <h3 id="success-title">订单已记录</h3>
+        <p id="success-code" class="pickup-code"></p>
+        <p id="success-status" class="order-status"></p>
         <p id="success-summary"></p>
         <ul id="success-items" class="success-items"></ul>
-        <p class="order-note">订单已发送给厨房。</p>
+        <p class="order-note">预计5分钟完成订单</p>
         <form method="dialog">
-          <button class="primary-button" type="submit">返回菜单</button>
+          <button class="primary-button" type="submit">查看我的订单</button>
         </form>
       </dialog>
     </main>

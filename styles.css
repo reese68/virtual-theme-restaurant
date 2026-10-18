@@ -576,6 +576,86 @@ h1 {
   line-height: 1.6;
 }
 
+/* ---------- 此设备上的模拟订单 ---------- */
+.my-orders {
+  margin: 0 clamp(24px, 5vw, 56px) 56px;
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card);
+}
+
+.my-orders .order-heading {
+  margin-bottom: 8px;
+}
+
+.my-orders > .order-note {
+  margin: 0 0 22px;
+}
+
+.my-orders-list {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.order-record {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.order-record-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-record-top strong {
+  font-size: 1.15rem;
+}
+
+.order-record-meta {
+  margin: 10px 0;
+  color: #625a52;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.order-record-items {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+.order-status {
+  display: inline-flex;
+  width: fit-content;
+  padding: 7px 11px;
+  border-radius: 100px;
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.pickup-code {
+  margin-bottom: 12px;
+  color: var(--accent-dark);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.new-order-button {
+  margin-top: 18px;
+}
+
 /* ---------- 菜品详情弹窗 ---------- */
 .dish-dialog {
   width: min(760px, calc(100% - 32px));
@@ -775,8 +855,13 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .order-section {
+  .order-section,
+  .my-orders {
     margin: 0 18px 30px;
+  }
+
+  .my-orders .order-heading {
+    flex-wrap: wrap;
   }
 
   .cart-item {

@@ -14,9 +14,61 @@ const orderForm = document.querySelector("#order-form");
 const tableField = document.querySelector("#table-field");
 const tableNumber = document.querySelector("#table-number");
 const orderSuccess = document.querySelector("#order-success");
+const myOrdersList = document.querySelector("#my-orders-list");
+const myOrdersEmpty = document.querySelector("#my-orders-empty");
+const clearOrdersButton = document.querySelector("#clear-orders");
 
-// 每家餐厅各有一份点单清单。刷新页面后会重新开始。
+const cartStorageKey = "virtual-restaurant-carts-v1";
+const orderStorageKey = "virtual-restaurant-orders-v1";
+const readyAfterMs = 5 * 60 * 1000;
+
+// localStorage 只属于此设备的浏览器；不可用时仍允许本次页面正常点单。
+function readSavedData(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveData(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // 无痕模式或本地文件可能不允许保存；本次页面仍可继续使用。
+  }
+}
+
+// 每家餐厅各有一份点单清单；从浏览器恢复时，只保留菜单里仍存在的菜。
 const carts = new Map();
+const savedCarts = readSavedData(cartStorageKey, {});
+restaurants.forEach((restaurant) => {
+  const savedItems = savedCarts?.[restaurant.code];
+  if (!Array.isArray(savedItems)) return;
+
+  const cart = new Map();
+  savedItems.forEach((entry) => {
+    if (!Array.isArray(entry) || entry.length !== 2) return;
+    const [name, quantity] = entry;
+    const dish = restaurant.menu.find((item) => item.name === name);
+    if (dish && Number.isInteger(quantity) && quantity > 0) cart.set(dish, quantity);
+  });
+  if (cart.size > 0) carts.set(restaurant.code, cart);
+});
+
+function saveCarts() {
+  const data = Object.fromEntries(
+    [...carts].map(([code, cart]) => [
+      code,
+      [...cart].map(([dish, quantity]) => [dish.name, quantity])
+    ])
+  );
+  saveData(cartStorageKey, data);
+}
+
+const storedOrders = readSavedData(orderStorageKey, []);
+let savedOrders = Array.isArray(storedOrders) ? storedOrders : [];
 let currentRestaurant = null;
 let selectedDish = null;
 
@@ -96,6 +148,7 @@ function showRestaurant(restaurant) {
   orderForm.reset();
   updateServiceFields();
   renderCart();
+  renderOrders();
 
   welcomeView.hidden = true;
   restaurantView.hidden = false;
@@ -108,7 +161,7 @@ function showDishDetails(dish, restaurant) {
   selectedDish = dish;
   const dishImage = document.querySelector("#dish-image");
   dishImage.src = dish.image;
-  dishImage.alt = `${dish.name}的主题插画`;
+  dishImage.alt = `${dish.name}的照片`;
 
   document.querySelector("#dish-restaurant").textContent = restaurant.name;
   document.querySelector("#dish-name").textContent = dish.name;
@@ -125,6 +178,7 @@ addToOrderButton.addEventListener("click", () => {
 
   const cart = getCurrentCart();
   cart.set(selectedDish, (cart.get(selectedDish) || 0) + 1);
+  saveCarts();
   renderCart();
   dishDialog.close();
   document.querySelector("#order-section").scrollIntoView({ behavior: "smooth" });
@@ -193,8 +247,79 @@ function changeQuantity(dish, amount) {
   } else {
     cart.set(dish, nextQuantity);
   }
+  saveCarts();
   renderCart();
 }
+
+// 进度只按下单时间模拟，不代表真实厨房状态；刷新后也能重新算出当前阶段。
+function getOrderStatus(createdAt) {
+  const elapsed = Math.max(0, Date.now() - createdAt);
+  if (elapsed >= readyAfterMs) return "模拟：可取餐";
+  if (elapsed >= 10 * 1000) return "模拟：制作中";
+  return "模拟：已接单";
+}
+
+function renderOrders() {
+  if (!currentRestaurant) return;
+
+  const orders = savedOrders.filter((order) =>
+    order && order.restaurantCode === currentRestaurant.code &&
+    Number.isFinite(order.createdAt) && Array.isArray(order.items)
+  );
+  myOrdersEmpty.hidden = orders.length > 0;
+  clearOrdersButton.disabled = orders.length === 0;
+  myOrdersList.replaceChildren();
+
+  orders.forEach((order) => {
+    const record = document.createElement("li");
+    record.className = "order-record";
+
+    const top = document.createElement("div");
+    top.className = "order-record-top";
+    const code = document.createElement("strong");
+    code.textContent = `模拟取餐码 ${order.pickupCode}`;
+    const status = document.createElement("span");
+    status.className = "order-status";
+    status.textContent = getOrderStatus(order.createdAt);
+    top.append(code, status);
+
+    const meta = document.createElement("p");
+    meta.className = "order-record-meta";
+    const time = new Date(order.createdAt).toLocaleString("zh-CN", {
+      month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit"
+    });
+    meta.textContent = `${time} · ${order.service} · 合计 ¥${order.total}`;
+
+    const items = document.createElement("ul");
+    items.className = "order-record-items";
+    order.items.forEach((dish) => {
+      const item = document.createElement("li");
+      item.textContent = `${dish.name} × ${dish.quantity}`;
+      items.append(item);
+    });
+
+    record.append(top, meta, items);
+    myOrdersList.append(record);
+  });
+}
+
+// 清空记录只影响这家餐厅、此浏览器；购物清单不受影响。
+clearOrdersButton.addEventListener("click", () => {
+  if (!currentRestaurant || !window.confirm("确定清空这家餐厅在此浏览器的模拟订单记录吗？")) return;
+  savedOrders = savedOrders.filter((order) => order?.restaurantCode !== currentRestaurant.code);
+  saveData(orderStorageKey, savedOrders);
+  renderOrders();
+});
+
+document.querySelector("#new-order").addEventListener("click", () => {
+  document.querySelector("#menu-title").scrollIntoView({ behavior: "smooth" });
+});
+
+// 页面开着时更新模拟进度；重新打开页面也会按时间恢复进度。
+setInterval(() => {
+  if (currentRestaurant && !restaurantView.hidden) renderOrders();
+}, 30 * 1000);
+window.addEventListener("focus", renderOrders);
 
 // 自取不需要填写桌号；堂食则必须填写。
 function updateServiceFields() {
@@ -213,7 +338,7 @@ document.querySelector("#continue-order").addEventListener("click", () => {
   document.querySelector("#menu-title").scrollIntoView({ behavior: "smooth" });
 });
 
-// 这里只生成浏览器中的演示回执，没有向服务器发送订单。
+// 提交后保存模拟订单与取餐码；不会向服务器或真实厨房发送。
 orderForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const cart = getCurrentCart();
@@ -230,6 +355,20 @@ orderForm.addEventListener("submit", (event) => {
   const itemCount = [...cart.values()].reduce((sum, quantity) => sum + quantity, 0);
   const total = [...cart.entries()].reduce((sum, [dish, quantity]) => sum + dish.price * quantity, 0);
   const service = isDineIn ? `堂食 · ${table} 号桌` : "自取";
+  const order = {
+    restaurantCode: currentRestaurant.code,
+    pickupCode: `${String(Date.now()).slice(-4)}${Math.floor(10 + Math.random() * 90)}`,
+    createdAt: Date.now(),
+    service,
+    total,
+    items: [...cart.entries()].map(([dish, quantity]) => ({ name: dish.name, quantity }))
+  };
+  savedOrders.unshift(order);
+  savedOrders = savedOrders.slice(0, 20); // 避免此浏览器积累无限多的演示订单。
+  saveData(orderStorageKey, savedOrders);
+
+  document.querySelector("#success-code").textContent = `模拟取餐码 ${order.pickupCode}`;
+  document.querySelector("#success-status").textContent = getOrderStatus(order.createdAt);
   document.querySelector("#success-summary").textContent =
     `${currentRestaurant.name} · ${itemCount} 份菜品 · 合计 ¥${total} · ${service}`;
 
@@ -242,14 +381,16 @@ orderForm.addEventListener("submit", (event) => {
   });
 
   cart.clear();
+  saveCarts();
   renderCart();
+  renderOrders();
   orderForm.reset();
   updateServiceFields();
   orderSuccess.showModal();
 });
 
 orderSuccess.addEventListener("close", () => {
-  document.querySelector("#menu-title").scrollIntoView({ behavior: "smooth" });
+  document.querySelector("#my-orders-title").scrollIntoView({ behavior: "smooth" });
 });
 
 // 点击“更换餐厅”后回到初始画面。
