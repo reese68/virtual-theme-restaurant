@@ -63,7 +63,7 @@ const restaurants = [
       { name: "秘制凉拌菜", description: "独家凉拌汁，品尝不一样的味道。", chef: "张师傅", image: "images/IMG_1093.JPG", price: 18 },
       { name: "茶叶蛋", description: "出口到澳大利亚的特色小吃。", chef: "小张师傅", image: "images/IMG_1096.JPG", price: 2 },
       { name: "蛋白冲剂（一杯）", description: "每天要吃够蛋白质哦。", chef: "李师傅", image: "images/IMG_1094.JPG", price: 8 },
-      { name: "蜂蜜水（一杯）", description: "甜而不腻，暖心暖胃，主厨的最爱。", chef: "张师傅", image: "images/IMG_1095.JPG", price: 18 }
+      { name: "蜂蜜水（一杯）", description: "甜而不腻，暖心暖胃，主厨的最爱。", chef: "张师傅", image: "images/IMG_1095.JPG", price: 8 }
     ]
   },
   {
