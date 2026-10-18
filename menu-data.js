@@ -1,5 +1,9 @@
 // 所有餐厅资料集中放在这里，方便以后增加餐厅或修改菜单。
 // 新菜品加在对应的 menu 数组中；每道菜需要 name、description、chef、image、price。
+// 今日公开营业的餐厅代码：只改这一行即可。例如 ["2171", "SDFJ"] 表示两家营业。
+// 秘密餐厅不放进名单，仍可用它自己的代码进入，也不计入首页数量。
+const openRestaurantCodes = ["2171"];
+
 const restaurants = [
   {
     name: "十八楼烧麦",
@@ -42,7 +46,7 @@ const restaurants = [
     name: "天鹅大酒楼",
     code: "2171",
    // theme: "湖畔怀旧宴",
-    description: "水晶灯亮起，白天鹅掠过想象中的湖面。经典酒楼菜在这里换上优雅的新装，适合慢慢吃、慢慢聊。",
+    description: "水晶灯亮起，白天鹅掠过窗外的湖面。在这里品尝家的味道，适合慢慢吃、慢慢聊。",
     colors: {
       accent: "#4761b6",
       dark: "#15296b",
@@ -53,8 +57,13 @@ const restaurants = [
       { name: "红烧排骨", description: "精选猪肋排，慢炖至肉质酥烂，色泽红亮，来自妈妈的味道。", chef: "李师傅", image: "images/IMG_1068.JPG", price: 58 },
       { name: "卤牛肉", description: "精选牛肉，经过特制卤料慢煮，肉质鲜嫩，香气扑鼻。", chef: "李师傅", image: "images/IMG_1069.JPG", price: 68 },
       { name: "酸辣白菜", description: "酸辣开胃，清爽解腻。", chef: "张师傅", image: "images/IMG_1070.JPG", price: 18 },
-      { name: "番茄鸡蛋面", description: "番茄的酸甜与鸡蛋的香滑完美融合，独家秘方，限量供应。", chef: "张师傅", image: "images/IMG_1071.JPG", price: 16 },
-      { name: "番茄炖牛腩", description: "精选澳洲牛肉，番茄与牛腩的完美结合，汤汁浓郁。", chef: "小张师傅", image: "images/IMG_1081.JPG", price: 42 }
+      { name: "番茄鸡蛋面", description: "番茄的酸甜与鸡蛋的香滑完美融合，限量供应。", chef: "张师傅", image: "images/IMG_1071.JPG", price: 16 },
+      { name: "番茄炖牛腩", description: "精选澳洲牛肉，番茄与牛腩的完美结合，汤汁浓郁。", chef: "小张师傅", image: "images/IMG_1081.JPG", price: 42 },
+      { name: "蒜香蒸菜", description: "时令蔬菜，每一口都感受到新鲜。", chef: "李师傅", image: "images/IMG_1092.JPG", price: 28 },
+      { name: "秘制凉拌菜", description: "独家凉拌汁，品尝不一样的味道。", chef: "张师傅", image: "images/IMG_1093.JPG", price: 18 },
+      { name: "茶叶蛋", description: "出口到澳大利亚的特色小吃。", chef: "小张师傅", image: "images/IMG_1096.JPG", price: 2 },
+      { name: "蛋白冲剂（一杯）", description: "每天要吃够蛋白质哦。", chef: "李师傅", image: "images/IMG_1094.JPG", price: 8 },
+      { name: "蜂蜜水（一杯）", description: "甜而不腻，暖心暖胃，主厨的最爱。", chef: "张师傅", image: "images/IMG_1095.JPG", price: 18 }
     ]
   },
   {

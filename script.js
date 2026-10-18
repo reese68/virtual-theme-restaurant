@@ -20,6 +20,15 @@ const carts = new Map();
 let currentRestaurant = null;
 let selectedDish = null;
 
+// 根据营业名单自动更新首页数字和公开的餐厅名称。
+const openRestaurants = restaurants.filter((restaurant) =>
+  !restaurant.secret && openRestaurantCodes.includes(restaurant.code)
+);
+document.querySelector(".door-count").textContent = openRestaurants.length;
+document.querySelector(".input-hint").textContent = openRestaurants.length
+  ? `今日可选：${openRestaurants.map((restaurant) => restaurant.name).join(" · ")}`
+  : "今日暂无公开营业的餐厅";
+
 // 提交表单时，按照名称或代码查找餐厅；隐藏餐厅只接受代码。
 restaurantForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -34,6 +43,12 @@ restaurantForm.addEventListener("submit", (event) => {
 
   if (!matchedRestaurant) {
     formMessage.textContent = "没有找到这家餐厅，请检查名称或代码后再试。";
+    restaurantInput.focus();
+    return;
+  }
+
+  if (!matchedRestaurant.secret && !openRestaurantCodes.includes(matchedRestaurant.code)) {
+    formMessage.textContent = "这家餐厅今日未营业，请选择今日营业的餐厅。";
     restaurantInput.focus();
     return;
   }
