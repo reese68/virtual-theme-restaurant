@@ -3,7 +3,7 @@
 // 菜品的 image 请指向 images/web/ 中的压缩版照片，原图留在 images/ 备份。
 // 今日公开营业的餐厅代码：只改这一行即可。例如 ["2171", "SDFJ"] 表示两家营业。
 // 秘密餐厅不放进名单，仍可用它自己的代码进入，也不计入首页数量。
-const openRestaurantCodes = ["2171"];
+const openRestaurantCodes = ["2171", "SDFJ", "KIMCHI"];
 
 const restaurants = [
   {
@@ -82,8 +82,15 @@ const restaurants = [
     menu: [
       { name: "照烧鸡腿饭", description: "精选澳洲鸡肉，复刻家乡味道。", chef: "欣主厨", image: "images/web/IMG_1080.jpg", price: 32 },
       { name: "红酸汤刀削面", description: "来自贵州的红酸汤，酸辣开胃。", chef: "芳主厨", image: "images/web/IMG_1082.jpg", price: 28 },
+      { name: "黑椒菲力牛排", description: "精选澳大利亚安格斯牛肉，简单调味极致美味。", chef: "芳主厨", image: "images/web/IMG_1105.jpg", price: 46 },
+      { name: "泡菜肉丸番茄意面", description: "泡菜的酸甜与肉丸的鲜美，完美融合。", chef: "欣主厨", image: "images/web/IMG_1107.jpg", price: 36 },
+      { name: "火腿鸡蛋辣炒乌冬面", description: "韩式辣酱浸入软弹的乌冬面，每一口都是享受。", chef: "芳主厨", image: "images/web/IMG_1106.jpg", price: 30 },
       { name: "葡萄冰茶特调", description: "葡萄与冰茶的完美结合，就像我们每一次旅程。", chef: "欣主厨，芳主厨", image: "images/web/IMG_1083.jpg", price: 24 },
-      { name: "椰林飘香", description: "养乐多与椰奶，意料之外的美好。", chef: "欣主厨，芳主厨", image: "images/web/IMG_1084.jpg", price: 22 }
+      { name: "椰林飘香", description: "养乐多与椰奶，意料之外的美好。", chef: "欣主厨，芳主厨", image: "images/web/IMG_1084.jpg", price: 22 },
+      { name: "菠萝菠萝蜜", description: "菠萝加入伏特加，带来热带风情。", chef: "欣主厨，芳主厨", image: "images/web/IMG_1114.jpg", price: 18 },
+      { name: "雪山晚霞", description: "草莓融化在椰子酒中，如梦如幻。", chef: "欣主厨", image: "images/web/IMG_1112.jpg", price: 20 },
+      { name: "落日醉金", description: "将橘香和威士忌溶入余晖中。", chef: "芳主厨", image: "images/web/IMG_1109.jpg", price: 22 },
+      { name: "魔法药水", description: "葡萄养乐多与朗姆的碰撞，带来夜色的神秘。", chef: "欣主厨", image: "images/web/IMG_1110.jpg", price: 18 }
     ]
   }
 ];
