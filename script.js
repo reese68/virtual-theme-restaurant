@@ -171,6 +171,7 @@ function renderMenu(restaurant) {
 function renderMenuItems(restaurant, category) {
   const menuList = document.querySelector("#menu-list");
   menuList.replaceChildren();
+  menuList.scrollTop = 0; // 换分类时从该类的第一道菜开始看。
 
   restaurant.menu
     .filter((dish) => category === "全部" || (dish.category || "其他") === category)

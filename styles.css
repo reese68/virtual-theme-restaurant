@@ -339,23 +339,23 @@ h1 {
   font-size: 0.86rem;
 }
 
-/* 左侧分类栏；点选后右侧只显示该类菜品。 */
+/* 菜单固定显示两行四道菜；更多菜品在右栏内部滚动。 */
 .menu-layout {
   display: grid;
   grid-template-columns: 160px minmax(0, 1fr);
   gap: 22px;
-  align-items: start;
+  height: 222px; /* 2 × 104px 菜卡 + 14px 间距 */
+  min-height: 0;
 }
 
 .menu-filters {
-  position: sticky;
-  top: 16px;
   display: flex;
-  max-height: calc(100dvh - 32px);
+  min-height: 0;
   padding: 8px;
   flex-direction: column;
   gap: 4px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--line);
   border-radius: 18px;
   background: color-mix(in srgb, var(--accent-soft) 12%, white);
@@ -364,6 +364,7 @@ h1 {
 .menu-filter {
   width: 100%;
   min-height: 44px;
+  flex: 1 0 44px; /* 类别少时均分；放不下时保持可点击高度并滚动。 */
   padding: 10px 12px;
   border: 0;
   border-radius: 11px;
@@ -389,6 +390,11 @@ h1 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   align-content: start;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-soft) transparent;
 }
 
 .menu-item {
@@ -508,14 +514,31 @@ body.cart-open {
 }
 
 .cart-close {
+  position: relative;
   width: 44px;
   height: 44px;
   border: 0;
   border-radius: 50%;
   color: var(--ink);
   background: color-mix(in srgb, var(--accent-soft) 30%, white);
-  font-size: 1.6rem;
-  line-height: 1;
+  font-size: 0; /* 不用字体字形定位叉号，避免不同设备上视觉偏移。 */
+}
+
+.cart-close::before,
+.cart-close::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  content: "";
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.cart-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* ---------- 点单清单 ---------- */
@@ -914,6 +937,7 @@ footer {
   .menu-layout {
     grid-template-columns: 136px minmax(0, 1fr);
     gap: 16px;
+    height: 406px; /* 一列三道半：3 × 104px + 3 × 14px + 半张卡。 */
   }
 
   .menu-grid {
@@ -985,7 +1009,7 @@ footer {
   }
 
   .restaurant-intro h2 {
-    font-size: clamp(2.4rem, 14vw, 3.4rem);
+    font-size: clamp(2.4rem, 13vw, 3.4rem);
   }
 
   .menu-heading {
@@ -999,6 +1023,7 @@ footer {
   .menu-layout {
     grid-template-columns: 78px minmax(0, 1fr);
     gap: 10px;
+    height: 359px; /* 三道半：3 × 94px + 3 × 10px + 半张卡。 */
   }
 
   .menu-grid {
@@ -1007,8 +1032,6 @@ footer {
   }
 
   .menu-filters {
-    top: 10px;
-    max-height: calc(100dvh - 100px);
     padding: 4px;
     border-radius: 14px;
   }
