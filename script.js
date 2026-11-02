@@ -17,6 +17,10 @@ const orderSuccess = document.querySelector("#order-success");
 const myOrdersList = document.querySelector("#my-orders-list");
 const myOrdersEmpty = document.querySelector("#my-orders-empty");
 const clearOrdersButton = document.querySelector("#clear-orders");
+const mobileCartBar = document.querySelector("#mobile-cart-bar");
+const mobileCartButton = document.querySelector("#mobile-cart-button");
+const desktopCartButton = document.querySelector("#desktop-cart-button");
+const cartDialog = document.querySelector("#cart-dialog");
 
 const cartStorageKey = "virtual-restaurant-carts-v1";
 const orderStorageKey = "virtual-restaurant-orders-v1";
@@ -124,26 +128,7 @@ function showRestaurant(restaurant) {
   document.querySelector("#restaurant-description").textContent = restaurant.description;
   document.querySelector("#menu-title").textContent = restaurant.secret ? "Special menu" : "今日菜单";
 
-  const menuList = document.querySelector("#menu-list");
-  menuList.innerHTML = "";
-
-  restaurant.menu.forEach((dish) => {
-    const menuItem = document.createElement("button");
-    menuItem.className = "menu-item";
-    menuItem.type = "button";
-    menuItem.setAttribute("aria-label", `查看${dish.name}的详情`);
-
-    const dishName = document.createElement("h4");
-    dishName.textContent = dish.name;
-
-    const price = document.createElement("span");
-    price.className = "menu-price";
-    price.textContent = `¥${dish.price}`;
-
-    menuItem.append(dishName, price);
-    menuItem.addEventListener("click", () => showDishDetails(dish, restaurant));
-    menuList.append(menuItem);
-  });
+  renderMenu(restaurant);
 
   orderForm.reset();
   updateServiceFields();
@@ -152,8 +137,60 @@ function showRestaurant(restaurant) {
 
   welcomeView.hidden = true;
   restaurantView.hidden = false;
+  mobileCartBar.hidden = false;
+  desktopCartButton.hidden = false;
+  document.body.classList.add("restaurant-active");
   document.title = `${restaurant.name}｜虚拟主题餐厅`;
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// 分类名称取自菜品资料，新增同类菜品时无需修改这里。
+function renderMenu(restaurant) {
+  const menuFilters = document.querySelector("#menu-filters");
+  const categories = ["全部", ...new Set(restaurant.menu.map((dish) => dish.category || "其他"))];
+  menuFilters.replaceChildren();
+
+  categories.forEach((category) => {
+    const filterButton = document.createElement("button");
+    filterButton.type = "button";
+    filterButton.className = "menu-filter";
+    filterButton.textContent = category;
+    filterButton.setAttribute("aria-pressed", String(category === "全部"));
+    filterButton.addEventListener("click", () => {
+      menuFilters.querySelectorAll("button").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button === filterButton));
+      });
+      renderMenuItems(restaurant, category);
+    });
+    menuFilters.append(filterButton);
+  });
+
+  renderMenuItems(restaurant, "全部");
+}
+
+function renderMenuItems(restaurant, category) {
+  const menuList = document.querySelector("#menu-list");
+  menuList.replaceChildren();
+
+  restaurant.menu
+    .filter((dish) => category === "全部" || (dish.category || "其他") === category)
+    .forEach((dish) => {
+      const menuItem = document.createElement("button");
+      menuItem.className = "menu-item";
+      menuItem.type = "button";
+      menuItem.setAttribute("aria-label", `查看${dish.name}的详情`);
+
+      const dishName = document.createElement("h4");
+      dishName.textContent = dish.name;
+
+      const price = document.createElement("span");
+      price.className = "menu-price";
+      price.textContent = `¥${dish.price}`;
+
+      menuItem.append(dishName, price);
+      menuItem.addEventListener("click", () => showDishDetails(dish, restaurant));
+      menuList.append(menuItem);
+    });
 }
 
 // 点击菜品后，把简介、厨师和图片放进详情弹窗。
@@ -181,7 +218,25 @@ addToOrderButton.addEventListener("click", () => {
   saveCarts();
   renderCart();
   dishDialog.close();
-  document.querySelector("#order-section").scrollIntoView({ behavior: "smooth" });
+  // 留在菜单方便继续选菜，点单清单可随时从固定按钮打开。
+});
+
+function openCart() {
+  if (!currentRestaurant || cartDialog.open) return;
+  cartDialog.showModal();
+  document.body.classList.add("cart-open");
+}
+
+mobileCartButton.addEventListener("click", openCart);
+desktopCartButton.addEventListener("click", openCart);
+document.querySelector("#close-cart").addEventListener("click", () => cartDialog.close());
+cartDialog.addEventListener("close", () => document.body.classList.remove("cart-open"));
+cartDialog.addEventListener("click", (event) => {
+  const bounds = cartDialog.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom) {
+    cartDialog.close();
+  }
 });
 
 function getCurrentCart() {
@@ -199,6 +254,10 @@ function renderCart() {
 
   document.querySelector("#cart-count").textContent = `${itemCount} 份菜品`;
   document.querySelector("#cart-total").textContent = `¥${total}`;
+  document.querySelector("#mobile-cart-count").textContent = `${itemCount} 份菜品`;
+  document.querySelector("#mobile-cart-total").textContent = `¥${total}`;
+  document.querySelector("#desktop-cart-count").textContent = `${itemCount} 份`;
+  document.querySelector("#desktop-cart-total").textContent = `¥${total}`;
   cartEmpty.hidden = itemCount > 0;
   cartContent.hidden = itemCount === 0;
   cartItems.replaceChildren();
@@ -335,7 +394,7 @@ orderForm.querySelectorAll('input[name="service"]').forEach((radio) => {
 tableNumber.addEventListener("input", () => tableNumber.setCustomValidity(""));
 
 document.querySelector("#continue-order").addEventListener("click", () => {
-  document.querySelector("#menu-title").scrollIntoView({ behavior: "smooth" });
+  cartDialog.close();
 });
 
 // 提交后保存模拟订单与取餐码；不会向服务器或真实厨房发送。
@@ -386,6 +445,7 @@ orderForm.addEventListener("submit", (event) => {
   renderOrders();
   orderForm.reset();
   updateServiceFields();
+  cartDialog.close();
   orderSuccess.showModal();
 });
 
@@ -396,6 +456,9 @@ orderSuccess.addEventListener("close", () => {
 // 点击“更换餐厅”后回到初始画面。
 changeRestaurantButton.addEventListener("click", () => {
   restaurantView.hidden = true;
+  mobileCartBar.hidden = true;
+  desktopCartButton.hidden = true;
+  document.body.classList.remove("restaurant-active");
   welcomeView.hidden = false;
   restaurantInput.value = "";
   document.title = "主题餐厅";

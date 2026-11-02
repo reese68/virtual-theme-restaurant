@@ -77,10 +77,50 @@
             <h3 id="menu-title">今日菜单</h3>
             <p>点击菜品，查看详情并加入点单</p>
           </div>
-          <div id="menu-list" class="menu-grid"></div>
+          <div class="menu-layout">
+            <!-- 分类按钮由 menu-data.js 中每道菜的 category 自动生成。 -->
+            <div id="menu-filters" class="menu-filters" role="group" aria-label="菜单分类"></div>
+            <div id="menu-list" class="menu-grid"></div>
+          </div>
         </div>
 
-        <!-- 购物清单和模拟订单只保存在当前浏览器。 -->
+        <!-- 已提交的模拟订单：刷新页面后仍可在这台设备上查看。 -->
+        <section id="my-orders" class="my-orders" aria-labelledby="my-orders-title">
+          <div class="order-heading">
+            <div>
+              <p class="eyebrow">ORDER STATUS</p>
+              <h3 id="my-orders-title">我的订单</h3>
+            </div>
+            <button id="clear-orders" class="secondary-button" type="button">清空订单记录</button>
+          </div>
+          <p class="order-note">点单记录仅保存在此浏览器。</p>
+          <p id="my-orders-empty" class="cart-empty">还没有提交订单。</p>
+          <ul id="my-orders-list" class="my-orders-list"></ul>
+          <button id="new-order" class="secondary-button new-order-button" type="button">再次点单</button>
+        </section>
+      </section>
+
+      <!-- 手机底栏与电脑浮动按钮打开同一份点单清单。 -->
+      <div id="mobile-cart-bar" class="mobile-cart-bar" hidden>
+        <button id="mobile-cart-button" class="mobile-cart-button" type="button" aria-haspopup="dialog" aria-controls="cart-dialog">
+          <span class="mobile-cart-summary">
+            <span id="mobile-cart-count" aria-live="polite">0 份菜品</span>
+            <strong id="mobile-cart-total">¥0</strong>
+          </span>
+          <span class="mobile-cart-action">查看点单 <span aria-hidden="true">↑</span></span>
+        </button>
+      </div>
+      <button id="desktop-cart-button" class="desktop-cart-button" type="button" aria-haspopup="dialog" aria-controls="cart-dialog" hidden>
+        <span>查看点单</span>
+        <span id="desktop-cart-count">0 份</span>
+        <strong id="desktop-cart-total">¥0</strong>
+      </button>
+
+      <!-- 手机从底部弹出，电脑从右侧滑出；清单和表单共用一份。 -->
+      <dialog id="cart-dialog" class="cart-dialog" aria-labelledby="order-title">
+        <div class="cart-dialog-top">
+          <button id="close-cart" class="cart-close" type="button" aria-label="关闭点单清单">×</button>
+        </div>
         <section id="order-section" class="order-section" aria-labelledby="order-title">
           <div class="order-heading">
             <div>
@@ -117,22 +157,7 @@
             </form>
           </div>
         </section>
-
-        <!-- 已提交的模拟订单：刷新页面后仍可在这台设备上查看。 -->
-        <section id="my-orders" class="my-orders" aria-labelledby="my-orders-title">
-          <div class="order-heading">
-            <div>
-              <p class="eyebrow">ORDER STATUS</p>
-              <h3 id="my-orders-title">我的订单</h3>
-            </div>
-            <button id="clear-orders" class="secondary-button" type="button">清空订单记录</button>
-          </div>
-          <p class="order-note">点单记录仅保存在此浏览器。</p>
-          <p id="my-orders-empty" class="cart-empty">还没有提交订单。</p>
-          <ul id="my-orders-list" class="my-orders-list"></ul>
-          <button id="new-order" class="secondary-button new-order-button" type="button">再次点单</button>
-        </section>
-      </section>
+      </dialog>
 
       <!-- 菜品详情弹窗：点击任意菜品后显示 -->
       <dialog
